@@ -23,6 +23,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f3xx_hal_def.h"
+#include <stdint.h>
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -128,11 +129,24 @@ int main(void)
   {
     /* USER CODE END WHILE */
     // myPrintf("Hello World\n");
-    int a = 2, b = 3;
-    int LHS = (a+b)*(a+b);
-    int RHS = a*a + 2*a*b + b*b;
-    char proof[] = "LHS = %d\r\nRHS = %d\r\nSo the equation (a+b)^2 = a^2 + 2ab + b^2 holds true.\r\n";
-    myPrintf(proof, LHS, RHS);
+    // int a = 2, b = 3;
+    // int LHS = (a+b)*(a+b);
+    // int RHS = a*a + 2*a*b + b*b;
+    // char proof[] = "LHS = %d\r\nRHS = %d\r\nSo the equation (a+b)^2 = a^2 + 2ab + b^2 holds true.\r\n";
+    // myPrintf(proof, LHS, RHS);
+    char str[] = "Microcontrollers";
+    int key = 7734;
+    char enc[17];
+    char dec[17];
+    for (int i = 0; i < 17; i++){
+      enc[i] = str[i] + key % 256;
+    }
+    myPrintf("Encrypted String: %s\r\n", enc);
+    for (int i = 0; i < 17; i++){
+      dec[i] = enc[i] - key % 256;
+    }
+    myPrintf("Decrypted String: %s\r\n", dec);  
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
