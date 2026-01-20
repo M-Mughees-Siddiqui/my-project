@@ -131,13 +131,13 @@ int main(void)
     int a = 2, b = 3;
     int LHS = (a+b)*(a+b);
     int RHS = a*a + 2*a*b + b*b;
-    char proof[] = "LHS = %d\n RHS = %d\n So the equation (a+b)^2 = a^2 + 2ab + b^2 holds true.\n";
+    char proof[] = "LHS = %d\r\nRHS = %d\r\nSo the equation (a+b)^2 = a^2 + 2ab + b^2 holds true.\r\n";
     myPrintf(proof, LHS, RHS);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
 }
-  
+
 /**
   * @brief System Clock Configuration
   * @retval None
