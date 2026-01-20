@@ -1,3 +1,7 @@
+#include "stdarg.h"
+#include "stdio.h"
+#include "stm32f3xx_hal.h"
+#include "string.h"
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
@@ -18,6 +22,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "stm32f3xx_hal_def.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -72,6 +77,18 @@ static void MX_USB_PCD_Init(void);
   * @brief  The application entry point.
   * @retval int
   */
+
+  void myPrintf(const char *fmt, ...){
+    char buffer[512];
+    va_list args;
+    va_start(args, fmt);
+    int len = vsnprintf(buffer, sizeof(buffer), fmt, args);
+    va_end(args);
+    if (len > 0) {
+        HAL_UART_Transmit(&huart2, (uint8_t*)buffer, len, HAL_MAX_DELAY);
+    }
+
+  }
 int main(void)
 {
 
@@ -110,12 +127,17 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-    HAL_UART_Transmit(&huart2, "Hello, World! \r", 13, HAL_MAX_DELAY);
+    // myPrintf("Hello World\n");
+    int a = 2, b = 3;
+    int LHS = (a+b)*(a+b);
+    int RHS = a*a + 2*a*b + b*b;
+    char proof[] = "LHS = %d\n RHS = %d\n So the equation (a+b)^2 = a^2 + 2ab + b^2 holds true.\n";
+    myPrintf(proof, LHS, RHS);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
 }
-
+  
 /**
   * @brief System Clock Configuration
   * @retval None
@@ -270,7 +292,7 @@ static void MX_USART2_UART_Init(void)
 
   /* USER CODE END USART2_Init 1 */
   huart2.Instance = USART2;
-  huart2.Init.BaudRate = 9600;
+  huart2.Init.BaudRate = 115200;
   huart2.Init.WordLength = UART_WORDLENGTH_8B;
   huart2.Init.StopBits = UART_STOPBITS_1;
   huart2.Init.Parity = UART_PARITY_NONE;
