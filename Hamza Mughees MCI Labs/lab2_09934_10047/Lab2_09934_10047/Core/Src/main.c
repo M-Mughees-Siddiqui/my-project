@@ -124,15 +124,22 @@ int main(void)
   /* USER CODE END 2 */
 while (1)
   {
+    
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
     /* USER CODE END WHILE */
+    
+    //task 1:
     // myPrintf("Hello World\n");
+
+    //task 2:
     // int a = 2, b = 3;
     // int LHS = (a+b)*(a+b);
     // int RHS = a*a + 2*a*b + b*b;
     // char proof[] = "LHS = %d\r\nRHS = %d\r\nSo the equation (a+b)^2 = a^2 + 2ab + b^2 holds true.\r\n";
     // myPrintf(proof, LHS, RHS);
+
+    //task 3:
     // char str[] = "Microcontrollers";
     // int key = 7734;
     // char enc[17];
@@ -144,38 +151,53 @@ while (1)
     // for (int i = 0; i < 17; i++){
     //   dec[i] = enc[i] - key % 256;
     // }
-    // myPrintf("Decrypted String: %s\r\n", dec);  
-    int a[2][2] = {{1, 2}, {3, 4}};
-    int b[2][2] = {{5, 6}, {7, 8}};
-    int c[2][2] = {{0, 0}, {0, 0}};
-    for (int i = 0; i < 2; i++){
-      for (int j = 0; j < 2; j++){
-        for (int k = 0; k < 2; k++){
-          c[i][j] += a[i][k] * b[k][j];
-        }
+    // myPrintf("Decrypted String: %s\r\n", dec);
+    
+    //task 4;
+    // int a[2][2] = {{1, 2}, {3, 4}};
+    // int b[2][2] = {{5, 6}, {7, 8}};
+    // int c[2][2] = {{0, 0}, {0, 0}};
+    // for (int i = 0; i < 2; i++){
+    //   for (int j = 0; j < 2; j++){
+    //     for (int k = 0; k < 2; k++){
+    //       c[i][j] += a[i][k] * b[k][j];
+    //     }
+    //   }
+    // }
+    // myPrintf("Matrix A:\r\n");
+    // for (int i = 0; i < 2; i++){  
+    //   for (int j = 0; j < 2; j++){
+    //     myPrintf("%d ", a[i][j]);
+    //   }
+    //   myPrintf("\r\n");
+    // }
+    // myPrintf("Matrix B:\r\n");
+    // for (int i = 0; i < 2; i++){    
+    //   for (int j = 0; j < 2; j++){
+    //     myPrintf("%d ", b[i][j]);
+    //   }
+    //   myPrintf("\r\n");
+    // }  
+    // myPrintf("Matrix C (A*B):\r\n");
+    // for (int i = 0; i < 2; i++){
+    //   for (int j = 0; j < 2; j++){
+    //     myPrintf("%d ", c[i][j]);
+    //   }
+    //   myPrintf("\r\n");
+    // }
+
+    //task 5;
+    myPrintf("Armstrong numbers between 100 and 999 are:\r\n");
+    for (int num = 100; num <= 999; num++){
+      int hundreds = num / 100;
+      int tens = (num / 10) % 10;
+      int units = num % 10;
+      int sum = hundreds*hundreds*hundreds + tens*tens*tens + units*units*units;
+      if (sum == num){
+        myPrintf("%d\r\n", num);
       }
     }
-    myPrintf("Matrix A:\r\n");
-    for (int i = 0; i < 2; i++){  
-      for (int j = 0; j < 2; j++){
-        myPrintf("%d ", a[i][j]);
-      }
-      myPrintf("\r\n");
-    }
-    myPrintf("Matrix B:\r\n");
-    for (int i = 0; i < 2; i++){    
-      for (int j = 0; j < 2; j++){
-        myPrintf("%d ", b[i][j]);
-      }
-      myPrintf("\r\n");
-    }  
-    myPrintf("Matrix C (A*B):\r\n");
-    for (int i = 0; i < 2; i++){
-      for (int j = 0; j < 2; j++){
-        myPrintf("%d ", c[i][j]);
-      }
-      myPrintf("\r\n");
-    }
+    HAL_Delay(5000);
     /* USER CODE BEGIN 3 */
   /* USER CODE END 3 */
   }
