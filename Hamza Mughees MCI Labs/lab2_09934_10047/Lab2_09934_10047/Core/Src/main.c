@@ -122,11 +122,10 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
-
+while (1)
+  {
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
     /* USER CODE END WHILE */
     // myPrintf("Hello World\n");
     // int a = 2, b = 3;
@@ -134,22 +133,52 @@ int main(void)
     // int RHS = a*a + 2*a*b + b*b;
     // char proof[] = "LHS = %d\r\nRHS = %d\r\nSo the equation (a+b)^2 = a^2 + 2ab + b^2 holds true.\r\n";
     // myPrintf(proof, LHS, RHS);
-    char str[] = "Microcontrollers";
-    int key = 7734;
-    char enc[17];
-    char dec[17];
-    for (int i = 0; i < 17; i++){
-      enc[i] = str[i] + key % 256;
+    // char str[] = "Microcontrollers";
+    // int key = 7734;
+    // char enc[17];
+    // char dec[17];
+    // for (int i = 0; i < 17; i++){
+    //   enc[i] = str[i] + key % 256;
+    // }
+    // myPrintf("Encrypted String: %s\r\n", enc);
+    // for (int i = 0; i < 17; i++){
+    //   dec[i] = enc[i] - key % 256;
+    // }
+    // myPrintf("Decrypted String: %s\r\n", dec);  
+    int a[2][2] = {{1, 2}, {3, 4}};
+    int b[2][2] = {{5, 6}, {7, 8}};
+    int c[2][2] = {{0, 0}, {0, 0}};
+    for (int i = 0; i < 2; i++){
+      for (int j = 0; j < 2; j++){
+        for (int k = 0; k < 2; k++){
+          c[i][j] += a[i][k] * b[k][j];
+        }
+      }
     }
-    myPrintf("Encrypted String: %s\r\n", enc);
-    for (int i = 0; i < 17; i++){
-      dec[i] = enc[i] - key % 256;
+    myPrintf("Matrix A:\r\n");
+    for (int i = 0; i < 2; i++){  
+      for (int j = 0; j < 2; j++){
+        myPrintf("%d ", a[i][j]);
+      }
+      myPrintf("\r\n");
     }
-    myPrintf("Decrypted String: %s\r\n", dec);  
-
+    myPrintf("Matrix B:\r\n");
+    for (int i = 0; i < 2; i++){    
+      for (int j = 0; j < 2; j++){
+        myPrintf("%d ", b[i][j]);
+      }
+      myPrintf("\r\n");
+    }  
+    myPrintf("Matrix C (A*B):\r\n");
+    for (int i = 0; i < 2; i++){
+      for (int j = 0; j < 2; j++){
+        myPrintf("%d ", c[i][j]);
+      }
+      myPrintf("\r\n");
+    }
     /* USER CODE BEGIN 3 */
-  }
   /* USER CODE END 3 */
+  }
 }
 
 /**
