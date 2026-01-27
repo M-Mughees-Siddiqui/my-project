@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include <stdlib.h>
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -59,42 +60,39 @@ static void MX_USB_PCD_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-uint8_t student_id[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}; // Example student ID: 023456789AbCdEF;
-uint8_t id_length = sizeof(student_id) / sizeof(student_id[0]);
-uint8_t current_index = 0;
-void display_number(uint8_t num) {
-    static const uint8_t segment_map[] = {
-        0x40, // 0
-        0x79, // 1
-        0x24, // 2
-        0x30, // 3
-        0x19, // 4
-        0x12, // 5
-        0x02, // 6
-        0x78, // 7
-        0x00, // 8
-        0x10, // 9
-        0x08, // A
-        0x03, // b
-        0x46, // C
-        0x21, // d
-        0x06, // E
-        0x0E  // F
-    };
+  void display_number(uint8_t num) {
+      static const uint8_t segment_map[] = {
+          0x40, // 0
+          0x79, // 1
+          0x24, // 2
+          0x30, // 3
+          0x19, // 4
+          0x12, // 5
+          0x02, // 6
+          0x78, // 7
+          0x00, // 8
+          0x10, // 9
+          0x08, // A
+          0x03, // b
+          0x46, // C
+          0x21, // d
+          0x06, // E
+          0x0E  // F
+      };
 
-    // Ensure we don't go out of bounds (0-15)
-    if (num > 15) return;
+      // Ensure we don't go out of bounds (0-15)
+      if (num > 15) return;
 
-    uint8_t pattern = segment_map[num];
+      uint8_t pattern = segment_map[num];
 
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, (pattern & 0x01) ? GPIO_PIN_SET : GPIO_PIN_RESET); // a
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, (pattern >> 1 & 0x01) ? GPIO_PIN_SET : GPIO_PIN_RESET); // b
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, (pattern >> 2 & 0x01) ? GPIO_PIN_SET : GPIO_PIN_RESET); // c
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, (pattern >> 3 & 0x01) ? GPIO_PIN_SET : GPIO_PIN_RESET); // d
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, (pattern >> 4 & 0x01) ? GPIO_PIN_SET : GPIO_PIN_RESET); // e
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, (pattern >> 5 & 0x01) ? GPIO_PIN_SET : GPIO_PIN_RESET); // f
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, (pattern >> 6 & 0x01) ? GPIO_PIN_SET : GPIO_PIN_RESET); // g
-}
+      HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, (pattern & 0x01) ? GPIO_PIN_SET : GPIO_PIN_RESET); // a
+      HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, (pattern >> 1 & 0x01) ? GPIO_PIN_SET : GPIO_PIN_RESET); // b
+      HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, (pattern >> 2 & 0x01) ? GPIO_PIN_SET : GPIO_PIN_RESET); // c
+      HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, (pattern >> 3 & 0x01) ? GPIO_PIN_SET : GPIO_PIN_RESET); // d
+      HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, (pattern >> 4 & 0x01) ? GPIO_PIN_SET : GPIO_PIN_RESET); // e
+      HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, (pattern >> 5 & 0x01) ? GPIO_PIN_SET : GPIO_PIN_RESET); // f
+      HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, (pattern >> 6 & 0x01) ? GPIO_PIN_SET : GPIO_PIN_RESET); // g
+  }
 /* USER CODE END 0 */
 
 /**
@@ -129,10 +127,7 @@ int main(void)
   MX_I2C1_Init();
   MX_USB_PCD_Init();
   /* USER CODE BEGIN 2 */
-  
-    /* USER CODE END WHILE */
 
-  // Show the first digit immediately
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -145,17 +140,7 @@ int main(void)
         // 2. Debouncing: Wait a short time and check again
         HAL_Delay(50); 
         if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET) {
-            
-            // 3. Increment index and reset to 0 if at the end
-            current_index++;
-            if (current_index >= id_length) {
-                current_index = 0;
-            }
-
-            // 4. Update the display
-            display_number(student_id[current_index]);
-
-            // 5. Wait for button release so it doesn't skip digits
+            display_number((rand()%6)+1);
             while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET);
         }
     }
@@ -338,11 +323,11 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : B1_Pin */
-  GPIO_InitStruct.Pin = B1_Pin;
+  /*Configure GPIO pins : B1_Pin PA8 */
+  GPIO_InitStruct.Pin = B1_Pin|GPIO_PIN_8;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PA1 PA2 PA3 PA4
                            PA5 PA6 PA7 */
