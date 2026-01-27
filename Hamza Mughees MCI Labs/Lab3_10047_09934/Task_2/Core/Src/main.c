@@ -18,7 +18,6 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "stm32f3xx_hal_gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -60,6 +59,9 @@ static void MX_USB_PCD_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+uint8_t student_id[] = {0,9,9,3,4}; // Example student ID: 09934
+uint8_t id_length = sizeof(student_id) / sizeof(student_id[0]);
+uint8_t current_index = 0;
 void display_number(uint8_t num) {
     static const uint8_t segment_map[] = {
         0x40, // 0
@@ -93,14 +95,14 @@ void display_number(uint8_t num) {
     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, (pattern >> 5 & 0x01) ? GPIO_PIN_SET : GPIO_PIN_RESET); // f
     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, (pattern >> 6 & 0x01) ? GPIO_PIN_SET : GPIO_PIN_RESET); // g
 }
-
 /* USER CODE END 0 */
 
 /**
   * @brief  The application entry point.
   * @retval int
   */
-int main(void) {
+int main(void)
+{
 
   /* USER CODE BEGIN 1 */
 
@@ -127,24 +129,37 @@ int main(void) {
   MX_I2C1_Init();
   MX_USB_PCD_Init();
   /* USER CODE BEGIN 2 */
+  
+    /* USER CODE END WHILE */
 
+  // Show the first digit immediately
+  display_number(student_id[current_index]);
   /* USER CODE END 2 */
-  /* Private user code ---------------------------------------------------------*/
-
-/* Inside the main loop -----------------------------------------------------*/
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
     /* USER CODE END WHILE */
-    // HAL_GPIO_WritePin (GPIOA , GPIO_PIN_1 , GPIO_PIN_SET );
-    //Task 1:
-    for (uint8_t i = 0; i <= 15; i++) {
-        display_number(i);
-        HAL_Delay(2000); // 2-second delay per task instructions
-      }
+    if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET) {
+        
+        // 2. Debouncing: Wait a short time and check again
+        HAL_Delay(50); 
+        if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET) {
+            
+            // 3. Increment index and reset to 0 if at the end
+            current_index++;
+            if (current_index >= id_length) {
+                current_index = 0;
+            }
 
+            // 4. Update the display
+            display_number(student_id[current_index]);
+
+            // 5. Wait for button release so it doesn't skip digits
+            while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET);
+        }
+    }
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -305,9 +320,6 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3|GPIO_PIN_4
                           |GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOF, GPIO_PIN_4, GPIO_PIN_RESET);
-
   /*Configure GPIO pins : DRDY_Pin MEMS_INT3_Pin MEMS_INT4_Pin MEMS_INT1_Pin
                            MEMS_INT2_Pin */
   GPIO_InitStruct.Pin = DRDY_Pin|MEMS_INT3_Pin|MEMS_INT4_Pin|MEMS_INT1_Pin
@@ -341,13 +353,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PF4 */
-  GPIO_InitStruct.Pin = GPIO_PIN_4;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
 
