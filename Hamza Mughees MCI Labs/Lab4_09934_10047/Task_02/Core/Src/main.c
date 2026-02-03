@@ -18,7 +18,6 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "stm32f3xx_hal_gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -73,14 +72,11 @@ static void MX_USB_PCD_Init(void);
   * @brief  The application entry point.
   * @retval int
   */
-/* USER CODE BEGIN 4 */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-    if (htim->Instance == TIM2) {
-        HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_10);
-      }
+  if (htim->Instance == TIM2) {
+      HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_10);
+    }
 }
-/* USER CODE END 4 */
-  
 int main(void)
 {
 
