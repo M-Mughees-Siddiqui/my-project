@@ -19,17 +19,29 @@ set(MX_Include_Dirs
 )
 
 # STM32CubeMX generated application sources
+<<<<<<< HEAD
 set(MX_Application_Src
+=======
+set(MX_Application_Src
+>>>>>>> main
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Core/Src/main.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Core/Src/stm32f3xx_it.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Core/Src/stm32f3xx_hal_msp.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Core/Src/sysmem.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Core/Src/syscalls.c
+<<<<<<< HEAD
     ${CMAKE_CURRENT_SOURCE_DIR}/../../startup_stm32f303xc.s
 )
 
 # STM32 HAL/LL Drivers
 set(STM32_Drivers_Src
+=======
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../startup_stm32f303xc.s
+)
+
+# STM32 HAL/LL Drivers
+set(STM32_Drivers_Src
+>>>>>>> main
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Core/Src/system_stm32f3xx.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_ll_usb.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_adc.c
@@ -52,8 +64,13 @@ set(STM32_Drivers_Src
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart_ex.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pcd.c
+<<<<<<< HEAD
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pcd_ex.c
 )
+=======
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pcd_ex.c
+)
+>>>>>>> main
 
 # Drivers Midllewares
 

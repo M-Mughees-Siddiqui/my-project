@@ -19,7 +19,11 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 # Set the project name
+<<<<<<< HEAD
 set(CMAKE_PROJECT_NAME Task2)
+=======
+set(CMAKE_PROJECT_NAME Task02)
+>>>>>>> main
 
 # Enable compile command to ease indexing with e.g. clangd
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
